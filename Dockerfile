@@ -2,5 +2,4 @@ FROM node:latest
 WORKDIR /app
 COPY . .
 RUN npm i
-CMD ['npm', 'start']
-EXPOSE 3333
+CMD ["npm", "start"]
