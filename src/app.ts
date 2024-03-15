@@ -6,12 +6,12 @@ const { PORT } = process.env;
 
 export class App {
   public app: Application;
-  private port: string;
+  private port: string | number;
   constructor(routers: Router[]) {
     this.app = express();
     this.initializeMiddlewares();
     this.initializeRouters(routers);
-    this.port = PORT;
+    this.port = PORT || 3333;
   }
   initializeMiddlewares() {
     this.app.use(bodyParser.urlencoded({ extended: true }));
