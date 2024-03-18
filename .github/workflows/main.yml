@@ -11,10 +11,25 @@ jobs:
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v4
-    - name: Checking the runner
+    - name: Creating an env file
       run: |
-        pwd
-        cat /home/runner/work/keka-tracker/keka-tracker/.gitignore
+        echo "PORT=${{ secrets.PORT }}" >> .env
+        echo "PARTIAL_URL=${{ secrets.PARTIAL_URL }}" >> .env
+        echo "AVERAGE_URL=${{ secrets.AVERAGE_URL }}" >> .env
+        echo "SUMMARY_URL=${{ secrets.SUMMARY_URL }}" >> .env
+        cat /home/runner/work/keka-tracker/keka-tracker/.env
+    - name: Creating the Docker Image
+      run: |
+        sudo docker build -t keka-tracker .
+        sudo docker save -o keka-tracker.tar keka-tracker
+    - name: Exporting the Docker Image
+      uses: appleboy/scp-action@master
+      with: 
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        source: "keka-tracker.tar"
+        destination: "/home/${{secrets.PROJECT_PATH}}"
     - name: Deploying to VPS
       uses: appleboy/ssh-action@master
       with:
@@ -23,6 +38,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
           cd ${{ secrets.PROJECT_PATH}}
+          ls -a
           git pull
           rm .env
           echo "PORT=${{ secrets.PORT }}" >> .env
