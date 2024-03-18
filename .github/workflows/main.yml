@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Checking the runner
       run: |
+        install ssh keys
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo ${{ secrets.PRIVATE_KEY }} > ~/.ssh/id_rsa
         cat ~/.ssh/id_rsa
     - name: Deploying to VPS
