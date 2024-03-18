@@ -22,15 +22,14 @@ jobs:
       run: |
         sudo docker build -t keka-tracker .
         sudo docker save -o keka-tracker.tar keka-tracker
-        ls -a
     - name: Exporting the Docker Image
       uses: appleboy/scp-action@master
       with: 
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.PRIVATE_KEY }}
-        source: "keka-tracker.tar"
-        destination: "${{secrets.PROJECT_PATH}}"
+        source: ".env"
+        target: "${{secrets.PROJECT_PATH}}"
     - name: Deploying to VPS
       uses: appleboy/ssh-action@master
       with:
