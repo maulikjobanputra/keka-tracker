@@ -18,7 +18,14 @@ export class DefaultController {
   public async hoursController(req: Request, res: Response, next: NextFunction): Promise<RESPONSE> {
     let { date, authToken } = req.query as { date: string; authToken: string };
     try {
-      date = date || format(new Date(), 'yyyy-MM-dd');
+      date =
+        date ||
+        format(
+          new Date().toLocaleString('en-US', {
+            timeZone: 'Asia/Kolkata'
+          }),
+          'yyyy-MM-dd'
+        );
       return await getHours(date, authToken);
     } catch (error) {
       console.log(`Error while getting hours for ${date}!`);

@@ -13,12 +13,14 @@ export class Service {
     };
   }
   async getHours(date: string, authToken: string): Promise<RESPONSE> {
+    console.log(date);
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authToken}`
     };
     const response = await axios.get(SUMMARY_URL, { headers });
     const day = response.data?.data.find((e: ObjectType) => e.attendanceDate.includes(date));
+    console.log(day);
     let workedMinutes = 0;
     for (let i = 0; i < Math.ceil(day.originalTimeEntries.length); i += 2) {
       if (day.originalTimeEntries[i + 1]) {
@@ -27,7 +29,12 @@ export class Service {
           day.originalTimeEntries[i].timestamp
         );
       } else {
-        workedMinutes += differenceInMinutes(new Date(), day.originalTimeEntries[i].timestamp);
+        workedMinutes += differenceInMinutes(
+          new Date().toLocaleString('en-US', {
+            timeZone: 'Asia/Kolkata'
+          }),
+          day.originalTimeEntries[i].timestamp
+        );
       }
     }
     return {
