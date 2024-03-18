@@ -12,8 +12,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Checking the runner
       run: |
-        echo ${{ secrets.PRIVATE_KEY }} > ~/.ssh/id_rsa
-        cat ~/.ssh/id_rsa
+        scp .gitignore  ${{secrets.USER}}@${{ secrets.HOST}}:/home/${{ secrets.USER }}
     - name: Deploying to VPS
       uses: appleboy/ssh-action@master
       with:
