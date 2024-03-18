@@ -22,6 +22,7 @@ jobs:
       run: |
         sudo docker build -t keka-tracker .
         sudo docker save -o keka-tracker.tar keka-tracker
+        ls -a
     - name: Exporting the Docker Image
       uses: appleboy/scp-action@master
       with: 
@@ -39,12 +40,6 @@ jobs:
         script: |
           cd ${{ secrets.PROJECT_PATH}}
           ls -a
-          git pull
-          rm .env
-          echo "PORT=${{ secrets.PORT }}" >> .env
-          echo "PARTIAL_URL=${{ secrets.PARTIAL_URL }}" >> .env
-          echo "AVERAGE_URL=${{ secrets.AVERAGE_URL }}" >> .env
-          echo "SUMMARY_URL=${{ secrets.SUMMARY_URL }}" >> .env
           sudo docker kill keka-tracker
           sudo docker rm keka-tracker
           sudo docker rmi keka-tracker
