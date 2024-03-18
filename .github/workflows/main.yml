@@ -16,7 +16,6 @@ jobs:
         echo "PARTIAL_URL=${{ secrets.PARTIAL_URL }}" >> .env
         echo "AVERAGE_URL=${{ secrets.AVERAGE_URL }}" >> .env
         echo "SUMMARY_URL=${{ secrets.SUMMARY_URL }}" >> .env
-        cat /home/runner/work/keka-tracker/keka-tracker/.env
     - name: Creating the Docker Image
       run: |
         sudo docker build -t keka-tracker .

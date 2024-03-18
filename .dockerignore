@@ -1,2 +1,5 @@
-.vscode
+.gitignore
+example.env
 dist/
+.vscode/
+.github/
