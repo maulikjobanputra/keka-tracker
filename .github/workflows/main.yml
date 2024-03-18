@@ -30,7 +30,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.PRIVATE_KEY }}
         source: "keka-tracker.tar"
-        destination: "/home/${{secrets.PROJECT_PATH}}"
+        destination: "${{secrets.PROJECT_PATH}}"
     - name: Deploying to VPS
       uses: appleboy/ssh-action@master
       with:
