@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
   
 jobs:
   pull_build_run:
@@ -44,4 +43,5 @@ jobs:
           cd ${{ secrets.PROJECT_PATH}}
           sudo docker load -i keka-tracker.tar
           sudo docker run -itd -p ${{ secrets.PORT }}:${{ secrets.PORT }} --name keka-tracker keka-tracker
+          rm keka-tracker.tar
           exit
