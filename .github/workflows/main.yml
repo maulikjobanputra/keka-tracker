@@ -22,7 +22,7 @@ jobs:
       run: |
         sudo docker build -t keka-tracker .
         sudo docker save -o keka-tracker.tar keka-tracker
-        chmod 600 keka-tracker.tar
+        sudo chmod 664 keka-tracker.tar
     - name: Exporting the Docker Image
       uses: appleboy/scp-action@master
       with: 
