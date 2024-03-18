@@ -19,3 +19,12 @@ jobs:
         script: |
           cd ${{ secrets.PROJECT_PATH}}
           echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "PARTIAL_URL=${{ secrets.PARTIAL_URL }}" >> .env
+          echo "AVERAGE_URL=${{ secrets.AVERAGE_URL }}" >> .env
+          echo "SUMMARY_URL=${{ secrets.SUMMARY_URL }}" >> .env
+          sudo docker kill keka-tracker
+          sudo docker rm keka-tracker
+          sudo docker rmi keka-tracker
+          sudo docker build -t keka-tracker .
+          sudo docker run -itd -p ${{ secrets.PORT }}:${{ secrets.PORT }} --name keka-tracker keka-tracker
+          exit
