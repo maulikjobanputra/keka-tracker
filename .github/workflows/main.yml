@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  pull_build_run:
+    name: pull-build-run
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploying to Digitalocean droplet
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: whoami
