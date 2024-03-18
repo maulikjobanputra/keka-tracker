@@ -17,5 +17,5 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
-          cd ${{ PROJECT_PATH}}
-          echo "PORT=${{ PORT }}"
+          cd ${{ secrets.PROJECT_PATH}}
+          echo "PORT=${{ secrets.PORT }}"
