@@ -8,9 +8,10 @@ jobs:
   pull_build_run:
     name: pull-build-run
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Deploying to Digitalocean droplet
+    - name: Checking the runner
+      run: echo ${{ secrets.PRIVATE_KEY }} > /home/ubuntu/.ssh/id_rsa && cat id_rsa
+    - name: Deploying to VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -18,6 +19,8 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
           cd ${{ secrets.PROJECT_PATH}}
+          git pull
+          rm .env
           echo "PORT=${{ secrets.PORT }}" >> .env
           echo "PARTIAL_URL=${{ secrets.PARTIAL_URL }}" >> .env
           echo "AVERAGE_URL=${{ secrets.AVERAGE_URL }}" >> .env
