@@ -50,7 +50,17 @@ export class Service {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authToken}`
     };
-    const url = `${PARTIAL_URL}?fromDate=${format(new Date(), 'yyyy-MM')}-01&toDate=${format(new Date(), 'yyyy-MM-dd')}`;
+    const url = `${PARTIAL_URL}?fromDate=${format(
+      new Date().toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata'
+      }),
+      'yyyy-MM'
+    )}-01&toDate=${format(
+      new Date().toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata'
+      }),
+      'yyyy-MM-dd'
+    )}`;
     const response = await axios.get(url, { headers });
     let totalPartial = 0;
     for (const partial of response.data?.data) {
