@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AsyncFunction, RESPONSE } from '../interfaces/common';
 import { StatusCode } from '../constants/status-code';
+import { AxiosError } from 'axios';
 
 export const asyncWrapper = (handler: AsyncFunction) => (req: Request, res: Response, next: NextFunction) => {
   Promise.resolve(handler(req, res, next))

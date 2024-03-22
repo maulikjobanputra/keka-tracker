@@ -1,6 +1,7 @@
 require('dotenv').config();
 import express, { Application, Router } from 'express';
 import bodyParser from 'body-parser';
+import { errorHandler } from './utils/error-handler';
 
 const { PORT } = process.env;
 
@@ -11,6 +12,7 @@ export class App {
     this.app = express();
     this.initializeMiddlewares();
     this.initializeRouters(routers);
+    this.initializeErrorHandler();
     this.port = PORT || 3333;
   }
   initializeMiddlewares() {
@@ -21,6 +23,9 @@ export class App {
     for (const router of routers) {
       this.app.use('/', router);
     }
+  }
+  initializeErrorHandler() {
+    this.app.use(errorHandler);
   }
   listen() {
     this.app.listen(this.port, () => {
